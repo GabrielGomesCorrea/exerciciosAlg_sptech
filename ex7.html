@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio 7</title>
+</head>
+<body>
+    Informa os nomes dos filmes que mais gosta, começando pelo seu favorito e depois o segundo que mais gosta e assim por diante: <br><br>
+    <input type="text" id="input_filmes"><br><br><button onclick="cadastrar()">Cadastrar</button><br><br>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    var lista_filmes = [];
+    function cadastrar(){
+        div_msg.innerHTML = "";
+        var filmes = input_filmes.value;
+        lista_filmes.push(filmes);
+
+        for(var index = 0; index < lista_filmes.length; index++){
+            if(((index + 1) % 2) == 0){
+                div_msg.innerHTML += `<p style="color: red;">${index + 1}º filme: ${lista_filmes[index]}</p>`;
+            }else{
+                div_msg.innerHTML += `<p style="color: blue;">${index + 1}º filme: ${lista_filmes[index]}</p>`;
+            }
+        }
+
+        input_filmes.value = '';
+    }
+</script>

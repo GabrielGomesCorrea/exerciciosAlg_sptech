@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 9</title>
+</head>
+<body>
+    Cadastre os projetos que você já fez: <br><br>
+    <input type="text" id="input_projetos"><br><br><button onclick="cadastrar()">Registrar projeto</button><br><br>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    var lista_projetos = [];
+
+    function cadastrar(){
+        div_msg.innerHTML = '';
+        var projetos = input_projetos.value;
+        lista_projetos.push(projetos);
+
+        if(lista_projetos.length >= 0 && lista_projetos.length <= 4){
+            div_msg.innerHTML += `Você já fez ${lista_projeto.length} projetos. Por isso você é um profissional Júnior`;
+        }else if(lista_projetos.length >= 5 && lista_projetos.length <= 12){
+            
+        }
+    }
+</script>
