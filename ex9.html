@@ -17,12 +17,19 @@
     function cadastrar(){
         div_msg.innerHTML = '';
         var projetos = input_projetos.value;
-        lista_projetos.push(projetos);
 
-        if(lista_projetos.length >= 0 && lista_projetos.length <= 4){
-            div_msg.innerHTML += `Você já fez ${lista_projeto.length} projetos. Por isso você é um profissional Júnior`;
-        }else if(lista_projetos.length >= 5 && lista_projetos.length <= 12){
-            
+        if(projetos == ""){
+            alert('Insira um nome de projeto');
+        }else{
+            lista_projetos.push(projetos);
+            if(lista_projetos.length >= 0 && lista_projetos.length <= 4){
+                div_msg.innerHTML += `Você já fez ${lista_projetos.length} projetos. Por isso você é um profissional Júnior`;
+            }else if(lista_projetos.length >= 5 && lista_projetos.length <= 12){
+                div_msg.innerHTML += `Você já fez ${lista_projetos.length} projetos. Por isso você é um profissional Pleno`;
+            }else if(lista_projetos.length >= 13){
+                div_msg.innerHTML += `Você já fez ${lista_projetos.length} projetos. Por isso você é um profissional Sênior`;
+            }
+            input_projetos.value = '';
         }
     }
 </script>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 13</title>
+</head>
+<body>
+    Cadastre a campanha de um time de futebol: 
+    <select name="" id="input_resultado">
+        <option value="#" disabled selected>Indique o resultado</option>
+        <option value="vitoria">Vitória</option>
+        <option value="empate">Empate</option>
+        <option value="derrota">Derrota</option>
+    </select><br><br>
+    <button onclick="registrar()">Registrar Jogo</button><br><br>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    var lista_jogos = [];
+
+    function registrar(){
+        var resultado = input_resultado.value;
+        var qtdvitoria = 0;
+        var qtdempate = 0;
+        var qtdderrota = 0;
+        if(input_resultado.value == '#'){
+            alert('Selecione uma opção');
+        }else{
+            lista_jogos.push(resultado);
+            for(var index = 0; index < lista_jogos.length; index++){
+                if(lista_jogos[index] == 'vitoria'){
+                    qtdvitoria++;
+                } else if(lista_jogos[index] == 'empate'){
+                    qtdempate++;
+                } else if(lista_jogos[index] == 'derrota'){
+                    qtdderrota++;
+                }
+            }
+            var total = (qtdvitoria * 3) + qtdempate;
+            var y = (total / lista_jogos.length) / 100;
+            div_msg.innerHTML = `O time teve: ${qtdvitoria} vitórias, ${qtdempate} empates, ${qtdderrota} derrotas <br>
+            Pontuação total: ${total} pontos <br>
+            Aproveitamento: ${y}% `;
+        }
+    }
+</script>

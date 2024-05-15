@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 15</title>
+</head>
+<body>
+    Nome do produto: <input type="text" id="input_produto"><br>
+    Preço de compra: <input type="number" id="input_preco"><br><br>
+    <button onclick="cadastrar()">Cadastrar</button><br><br>
+    <button onclick="relatorio()">Relatório de Estoque</button><br><br>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    var lista_produtos = [];
+    var lista_compras = [];
+
+    function cadastrar(){
+        var produto = input_produto.value;
+        var preco = Number(input_preco.value);
+        if(input_produto.value == '' || Number(input_preco.value) == ''){
+            alert('Insira informações válidas')
+        }else{
+            var indiceproduto = lista_produtos.indexOf(produto);
+            if(indiceproduto >= 0){
+                alert('Esse produto já foi cadastrado')
+            }else{
+                lista_produtos.push(produto);
+                lista_compras.push(preco);
+            }
+        }
+        input_produto.value = '';
+        input_preco.value = '';
+    }
+    function relatorio(){
+        div_msg.innerHTML = '';
+        div_msg.innerHTML += `Total de produtos: ${lista_produtos.length}<br>`;
+        for(var index = 0; index < lista_compras.length; index++){
+            div_msg.innerHTML += `<br>Produto ${index + 1}: ${lista_produtos[index]} <br>
+            Preço de compra: R$${lista_compras[index]}. Vender por R$${lista_compras[index] + ((lista_compras[index] * 25) / 100)} `;
+        }
+    }
+</script>

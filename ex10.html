@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 10</title>
+</head>
+<body>
+    Registre os nomes das linhas de ônibus que você pegou durante a semana: <input type="text" id="input_linhas"><br><br>
+    <button onclick="gravar()">Gravar Busão</button><br><br>
+    <div id="div_msg"></div><br><br>
+    Pesquisar linha: <input type="text" id="input_pesquisa"><br><button onclick="pesquisar()">Pesquisar</button><br><br>
+    <div id="div_pesquisa"></div>
+</body>
+</html>
+<script>
+    var lista_linhas = [];
+
+    function gravar(){
+        var linha = input_linhas.value;
+
+        div_msg.innerHTML = '';
+
+        if(input_linhas.value == ''){
+            alert('Insira uma linha válida');
+        }else{
+            lista_linhas.push(linha)
+            for(var index = lista_linhas.length - 1; index >= 0; index--){
+            div_msg.innerHTML += `${index + 1}º linha: ${lista_linhas[index]}<br>`;
+            }
+        }
+        input_linhas.value = '';
+    }
+    function pesquisar(){
+        div_pesquisa.innerHTML = '';
+
+        var pesquisa = input_pesquisa.value;
+
+        var indice_pesquisa = lista_linhas.indexOf(pesquisa);
+
+        var lista_pesquisa = [];
+        input_pesquisa.value = '';
+
+        if(indice_pesquisa >= 0){
+            for(var indice = 0; indice < lista_linhas.length; indice++){
+                if(lista_linhas[indice] == pesquisa){
+                    lista_pesquisa.push(indice + 1);
+                    div_pesquisa.innerHTML = `Você já pegou essa linha ${lista_pesquisa.length} vezes, nessa ordem: ${lista_pesquisa}`;
+                }
+            }
+        }else{
+            div_pesquisa.innerHTML = `Você nunca pegou essa linha`;
+        }   
+    }
+</script>

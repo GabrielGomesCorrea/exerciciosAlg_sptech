@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 11</title>
+</head>
+<body>
+    Preço do produto: <input type="number" id="input_preco"><br><br>
+    <button onclick="cadastrar()">Cadastrar</button><br><br>
+    <button onclick="atualizar()">Atualizar estoque</button><br><br>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    var lista_precos = [];
+    var valorfinal = 0;
+    function cadastrar(){
+        var preco = Number(input_preco.value);
+
+        if(input_preco.value == '' || input_preco == 0){
+            alert('Insira um preço válido');
+        }else{
+            lista_precos.push(preco);
+        }
+        input_preco.value = '';
+        valorfinal+=preco;
+    }
+    function atualizar(){
+        div_msg.innerHTML = '';
+        for(var index = lista_precos.length - 1; index >= 0; index--){
+            div_msg.innerHTML += `Preço ${index + 1}: ${lista_precos[index]}<br>`;
+        }
+        div_msg.innerHTML += `<br>Você tem ${lista_precos.length} produtos cadastrados em estoque<br> Seu estoque vale: ${valorfinal}`;
+    }
+</script>
