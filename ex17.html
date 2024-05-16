@@ -193,11 +193,12 @@
         }else if(indicev < 0){
             alert('O combustível não existe no estoque');
         }else{
-            div_msg.innerHTML = '';
             input_prodvender.value = '';
             input_qtdvenda.value = '';
             for(var v = 0; v < lista_produto.length; v++){
-                if(lista_produto[v] == venda){
+                if(qtdvenda > lista_quantidade[v]){
+                    alert('Você não tem saldo de combustível o suficiente para essa venda');
+                }else if(lista_produto[v] == venda){
                     lista_quantidade[v] = lista_quantidade[v] - qtdvenda;
                     div_msg.innerHTML = `<h4>Combustível vendido:</h4>
                     Nome do combustível vendido: ${lista_produto[v]}<br>
