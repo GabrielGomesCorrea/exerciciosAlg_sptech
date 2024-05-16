@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 17</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family: "Lato", sans-serif;
+            margin: 0;
+        }
+        button{
+            cursor: pointer;
+            background-color: #415A77;
+            color: #E0E1DD;
+            border: #0D1B2A solid 1px;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+        .titulo{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .secao1{
+            display: flex;
+            justify-content: center;
+        }
+        .parte1{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .pp{
+            width: 800px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        .cadastrar{
+            background-color: #E0E1DD;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        .cadastrar h3{
+            color: #0D1B2A;
+        }
+        .cadastrar p{
+            color: #0D1B2A;
+        }
+        .vender{
+            background-color: #E0E1DD;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        .vender h3{
+            color: #0D1B2A;
+        }
+        .vender p{
+            color: #0D1B2A;
+        }
+        .tt{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px;
+        }
+        .pesquisa{
+            background-color: #E0E1DD;
+            height: 130px;
+            width: 350px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        .pesquisa h3{
+            color: #0D1B2A;
+        }
+        .pesquisa p{
+            color: #0D1B2A;
+        }
+        .historico{
+            background-color: #415A77;
+            width: 500px;
+            height: 100%;
+            border-radius: 20px;
+            padding: 20px;
+            color: #E0E1DD;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="titulo">Estoque - Autoposto de abastecimento Anil Osag</h1>
+    <div class="secao1">
+        <div class="parte1">
+            <div class="pp">
+                <div class="cadastrar">
+                    <h3>Cadastrar e visualizar combustíveis</h3><br>
+                    <p>Nome do combustível comprado:</p> <input type="text" id="input_produto"><br>
+                    <p>Quantidade de combustível comprado (litros):</p> <input type="number" id="input_qtd"><br>
+                    <button onclick="cadastrar()">Cadastrar combustível</button><br>
+                    <button onclick="visualizar()">Visualizar Estoque Geral</button>
+                </div>
+                <div class="vender">
+                    <h3>Vender combustível</h3><br>
+                    <p>Nome do combustível que deseja vender:</p> <input type="text" id="input_prodvender"><br>
+                    <p>Quantidade do combustível que deseja vender (litros):</p> <input type="number" id="input_qtdvenda"><br>
+                    <button onclick="vender()">Vender</button>
+                </div>
+            </div>
+            <div class="tt">
+                <div class="pesquisa">
+                    <h3>Pesquisar por um Combustível</h3><br>
+                    <p>Pesquisar combustível no estoque pelo nome:</p> <input type="text" id="input_pesquisa"><br>
+                    <button onclick="pesquisar()">Pesquisar</button>
+                </div>
+            </div>
+        </div>
+        <div class="historico">
+            <h2>Acompanhe as atualizações aqui:</h2><br>
+            <div id="div_pesquisa"></div>
+            <div id="div_msg"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var lista_produto = [];
+    var lista_quantidade = [];
+
+    function cadastrar(){
+        div_pesquisa.innerHTML = '';
+        var produto = input_produto.value;
+        var quantidade = Number(input_qtd.value);
+
+        if(produto == '' || quantidade == 0 || quantidade == ''){
+            alert('Preencha os campos de cadastro corretamente');
+        }else{
+            div_msg.innerHTML = '';
+            var indice = lista_produto.indexOf(produto);
+            input_produto.value = '';
+            input_qtd.value = '';
+            if(indice >= 0){
+                alert('Esse combustível já existe no estoque e já adicionamos o valor à sua quantidade');
+                for(var j = 0; j < lista_produto.length; j++){
+                    if(produto == lista_produto[j]){
+                        lista_quantidade[j] = lista_quantidade[j] + quantidade;
+                        visualizar();
+                    }
+                }
+            }else{
+                lista_produto.push(produto);
+                lista_quantidade.push(quantidade);
+                visualizar();
+            }
+        }
+    }
+
+    function visualizar(){
+        div_msg.innerHTML = '';
+        div_pesquisa.innerHTML = '';
+        if(lista_produto.length == 0){
+            alert('Ainda não existe produtos no estoque');
+        }else{
+            div_msg.innerHTML += `<h4>Estoque geral</h4>Total de combustíveis no estoque: ${lista_produto.length}`;
+            for(var index = 0; index < lista_produto.length; index++){
+                div_msg.innerHTML += `<br><br>Nome do combustível: ${lista_produto[index]}<br>
+                Quantidade de ${lista_produto[index]}: ${lista_quantidade[index]} litros`;
+            }
+        }
+    }
+
+    function vender(){
+        var venda = input_prodvender.value;
+        var qtdvenda = Number(input_qtdvenda.value);
+
+        var indicev = lista_produto.indexOf(venda);
+
+        if(venda == '' || qtdvenda == 0 || qtdvenda == ''){
+            alert('Preencha os campos de venda corretamente');
+        }else if(indicev < 0){
+            alert('O combustível não existe no estoque');
+        }else{
+            div_msg.innerHTML = '';
+            input_prodvender.value = '';
+            input_qtdvenda.value = '';
+            for(var v = 0; v < lista_produto.length; v++){
+                if(lista_produto[v] == venda){
+                    lista_quantidade[v] = lista_quantidade[v] - qtdvenda;
+                    div_msg.innerHTML = `<h4>Combustível vendido:</h4>
+                    Nome do combustível vendido: ${lista_produto[v]}<br>
+                    Litros vendidos: ${qtdvenda}<br>
+                    Quantidade de ${lista_produto[v]} restante: ${lista_quantidade[v]} litros`;
+                }
+            }
+        }
+    }
+
+    function pesquisar(){
+        var pesquisa = input_pesquisa.value;
+
+        var indicep = lista_produto.indexOf(pesquisa);
+
+        if(pesquisa == ''){
+            alert('Preencha o campo de pesquisa corretamente');
+        }else if(indicep < 0){
+            alert('O combustível não existe no estoque');
+        }else{
+            div_msg.innerHTML = '';
+            for(var p = 0; p < lista_produto.length; p++){
+            if(lista_produto[p] == pesquisa){
+                div_pesquisa.innerHTML = `<h4>Combustível pesquisado:</h4>
+                Nome do combustível: ${lista_produto[p]}<br>
+                Quantidade de ${lista_produto[p]}: ${lista_quantidade[p]} litros`;
+            }
+        }
+        }
+        input_pesquisa.value = '';
+    }
+</script>
