@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 19</title>
+</head>
+<body>
+    Adicione filmes: <input type="text" id="input_filme"><br><br>
+    <button onclick="cadastrar()">Cadastrar</button><br>
+    <div id="div_filmes"></div><br><br>
+    <button onclick="listar()">Listar Filmes</button><br><br>
+    <div id="div_lista"></div><br>
+    De: <input type="text" id="input_de"> Até: <input type="text" id="input_ate"><br><br>
+    <button onclick="filtrar()">Filtrar</button><br><br>
+    <div id="div_filtro"></div>
+</body>
+</html>
+<script>
+    var lista_filmes = [];
+
+    function cadastrar(){
+        var filme = input_filme.value;
+        var indice_filme = lista_filmes.indexOf(filme);
+
+        if(filme == ''){
+            alert('Cadastre um filme válido');
+        }else if(indice_filme >= 0){
+            alert('Você já cadastrou esse filme à lista');
+        }else{
+            input_filme.value = '';
+            lista_filmes.push(filme);
+
+            div_filmes.innerHTML = `Você já assistiu ${lista_filmes.length} filmes`;
+        }
+    }
+
+    function listar(){
+        div_lista.innerHTML = '';
+        if(lista_filmes.length < 1){
+            alert('Você ainda não cadastrou nenhum filme');
+        }else{
+            for(var index = lista_filmes.length - 1; index >= 0; index--){
+                div_lista.innerHTML += `Filme ${index + 1}: ${lista_filmes[index]}<br>`;
+            }
+        }
+    }
+
+    function filtrar(){
+        var de = Number(input_de.value);
+        var ate = Number(input_ate.value);
+
+        if(lista_filmes.length < 1){
+            alert('Nenhum filme foi adicionada ainda');
+        }else if(de == '' || de <= 0 || ate == '' || ate <= 0){
+            alert('Preencha o intervalo com números válidos');
+        }else{
+            div_filtro.innerHTML = '';
+            input_de.value = '';
+            input_ate.value = '';
+
+            for(var intervalo = ate - 1; intervalo >= (de - 1); intervalo--){
+                if(lista_filmes[intervalo] == undefined){
+                    div_filtro.innerHTML += `Filme ${intervalo + 1}: não há filme nessa posição<br>`;
+                }else{
+                    div_filtro.innerHTML += `Filme ${intervalo + 1}: ${lista_filmes[intervalo]}<br>`;
+                }
+            }
+        }
+    }
+</script>

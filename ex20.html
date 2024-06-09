@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 20</title>
+</head>
+<body>
+    Preço do produto: <input type="number" id="input_preco"><br><br>
+    Nome do produto: <input type="text" id="input_produto"><br><br>
+    <button onclick="cadastrar()">Cadastrar Produto</button><br><br>
+    <button onclick="atualizar()">Atualizar Estoque</button><br><br>
+    <div id="div_estoque"></div><br><br>
+    <select name="" id="select_intervalo">
+        <option value="#" selected disabled>Selecione uma opção</option>
+        <option value="acima">Preços acima de </option>
+        <option value="abaixo">Preços abaixo de </option>
+    </select>
+    Valor: <input type="number" id="input_valor"><br>
+    <button onclick="filtrar()">Filtrar Produtos</button><br>
+    <div id="div_filtro"></div>
+</body>
+</html>
+<script>
+    var lista_preco = [];
+    var lista_produto = [];
+    var contador = 0;
+    function cadastrar(){
+        var preco = Number(input_preco.value);
+        var produto = input_produto.value;
+
+        if(preco <= 0 || produto.length < 3){
+            alert('Insira um produto com preço de número positivo e um nome de produto que contenha 3 ou mais letras');
+        }else{
+            input_preco.value = '';
+            input_produto.value = '';
+            lista_preco.push(preco);
+            lista_produto.push(produto);
+            contador+=preco;
+        }
+    }
+
+    function atualizar(){
+        div_estoque.innerHTML = '';
+        div_estoque.innerHTML += `Você tem ${lista_produto.length} produtos cadastrados em estoque:<br>`;
+        for(var index = 0; index < lista_produto.length; index++){
+            div_estoque.innerHTML += `${index + 1}. ${lista_produto[index]} - R$${lista_preco[index]}<br>`;
+        }
+        div_estoque.innerHTML += `Seu estoque vale R$${contador}`;
+    }
+
+    function filtrar(){
+        var select = select_intervalo.value;
+        var parametro = Number(input_valor.value);
+        div_filtro.innerHTML = '';
+
+        if(select === 'acima'){
+            for(var ac = 0; ac < lista_produto.length; ac++){
+                if(lista_preco[ac] > parametro){
+                    div_filtro.innerHTML += `Produto ${ac + 1}: ${lista_produto[ac]} - R$${lista_preco[ac]}<br>`;
+                }
+            }
+        } else if (select === 'abaixo'){
+            for(var ac = 0; ac < lista_produto.length; ac++){
+                if(lista_preco[ac] < parametro){
+                    div_filtro.innerHTML += `Produto ${ac + 1}: ${lista_produto[ac]} - R$${lista_preco[ac]}<br>`;
+                }
+            }
+        } else {
+            alert('Selecione uma opção válida.');
+        }
+    }
+</script>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburg & Ria</title>
+</head>
+<body>
+    <div id="div_pagina">
+        <h2>Faça o Blend</h2>
+        Nome da carne: <input type="text" id="input_nome"><br><br>
+        Peso em gramas: <input type="number" id="input_gramas"><br><br>
+        Preço por quilo: <input type="number" id="input_quilo"><br><br>
+        <button onclick="adicionar()">Adicionar Ingrediente no Blend</button><br><br>
+        Dê um nome para o Hamburguer desse blend: <input type="text" id="input_nomeburger"><br><br>
+        <button onclick="preparar()">Preparar Blend e Registrar</button><br><br>
+        <div id="div_burger"></div><br><br>
+        <button onclick="montar()">Montar Cardápio de Lanches</button>
+    </div>
+</body>
+</html>
+<script>
+    var lista_nome = [];
+    var lista_gramas = [];
+    var lista_quilo = [];
+
+    function adicionar(){
+        var nome = input_nome.value;
+        var gramas = Number(input_gramas.value);
+        var quilo = Number(input_quilo.value);
+
+        if(nome == '' || gramas == '' || gramas == 0 || quilo == '' || quilo == 0){
+            div_burger.innerHTML = `<p style='color: red'>Preencha os campos do Blend corretamente</p>`;
+        }else if(lista_nome.indexOf(nome) >= 0){
+            div_burger.innerHTML = `<p style='color: red'>Você já adicionou "${nome}" de carne</p>`;
+        }else{
+            lista_nome.push(nome);
+            lista_gramas.push(gramas);
+            lista_quilo.push(quilo);
+            div_burger.innerHTML = `<p style='color: green'>O ingrediente foi adicionado com sucesso</p>`;
+            input_nome.value = '';
+            input_gramas.value = '';
+            input_quilo.value = '';
+        }
+    }
+
+    var lista_burgersnome = [];
+    var lista_burgerspeso = [];
+    var lista_burgerspreco = [];
+
+    function preparar(){
+        var burger = input_nomeburger.value;
+        var pesototal = 0;
+        var precototal = 0;
+
+        if(burger == ''){
+            div_burger.innerHTML = `<p style='color: red'>Preencha o campo do nome do Hamburguer corretamente</p>`;
+        }else if(lista_nome.length < 1){
+            div_burger.innerHTML = `<p style='color: red'>Ainda não foi adicionado nenhum tipo de carne</p>`;
+        }else if(lista_nome.length < 2){
+            div_burger.innerHTML = `<p style='color: red'>Ainda há apenas 1 tipo de carne adicionado ao blend, adicione mais um ou até mais</p>`;
+        }else{
+            div_burger.innerHTML = '';
+            input_nomeburger.value = '';
+            div_burger.innerHTML += `<b>PREPARANDO NOVO HAMBURGUER</b>`;
+            for(var index = 0; index < lista_nome.length; index++){
+                div_burger.innerHTML += `<br>${index + 1} - Ingrediente: ${lista_nome[index]} - Peso: ${lista_gramas[index]} - 
+                Preço KG: ${lista_quilo[index]} - Preço Final: ${(lista_quilo[index] / 1000) * lista_gramas[index]}`;
+                pesototal+=lista_gramas[index];
+                precototal+=(lista_quilo[index] / 1000) * lista_gramas[index];
+            }
+            lista_burgersnome.push(burger);
+            lista_burgerspeso.push(pesototal);
+            lista_burgerspreco.push(precototal);
+            div_burger.innerHTML += `<br><br><b>INFORMAÇÕES DO HAMBURGUER REGISTRADO NO CATÁLOGO:</b><br>
+                                    Nome: ${burger}<br>
+                                    Peso Total: ${pesototal} gramas<br>
+                                    Preço Total: ${precototal}`;
+
+            lista_nome = [];
+            lista_gramas = [];
+            lista_quilo = [];
+        }
+    }
+
+    function montar(){
+        if(lista_burgersnome.length < 1){
+            div_burger.innerHTML = `<p style='color: red'>Ainda não há nenhum Hamburguer registrado</p>`;
+        }else{
+            div_burger.innerHTML = '';
+            var opcoes = '';
+            for(var i = 0; i < lista_burgersnome.length; i++){
+                opcoes+=`<option>${lista_burgersnome[i]}</option>`;
+            }
+
+            div_pagina.innerHTML = `<h2>Criação dos lanches do cardápio</h2>
+            Tipo de hamburguer: <select name="" id="select_tipoburger">
+                <option value="#" disabled selected>Selecione uma opção</option>
+                ${opcoes}
+            </select><br><br>
+            Quantidade de Hamburgueres: <input type="number" id="input_qtdburgers"><br><br>
+            Tipo de Queijo: <select name="" id="select_queijo">
+                <option value="#" disabled selected>Selecione uma opção</option>
+                <option>Sem Queijo</option>
+                <option>Mussarela</option>
+                <option>Prato</option>
+                <option>Cheddar</option>
+            </select><br><br>
+            Cebola? <select name="" id="select_cebola">
+                <option value="#" disabled selected>Selecione uma opção</option>
+                <option>Sim</option>
+                <option>Não</option>
+            </select><br><br>
+            Alface? <select name="" id="select_alface">
+                <option value="#" disabled selected>Selecione uma opção</option>
+                <option>Sim</option>
+                <option>Não</option>
+            </select><br><br>
+            Tomate? <select name="" id="select_tomate">
+                <option value="#" disabled selected>Selecione uma opção</option>
+                <option>Sim</option>
+                <option>Não</option>
+            </select><br><br>
+            <button onclick="cardapio()">Adicionar Lanche ao Cardápio</button><br><br>
+            <div id="div_lanches"></div>`;
+        }
+    }
+
+    var cardapioTipo = [];
+    var cardapioTipo = [];
+    var cardapioTipo = [];
+    var cardapioTipo = [];
+    var cardapioTipo = [];
+    
+    function cardapio(){
+        var tipo = select_tipoburger.value;
+        var quantidade = Number(input_qtdburgers.value);
+        var queijo = select_queijo.value;
+        var cebola = select_cebola.value;
+        var alface = select_alface.value;
+        var tomate = select_tomate.value;
+
+        if(tipo == '#' || quantidade == '' || quantidade == 0 || queijo == '#' || cebola == '#' || alface == '#' || tomate == '#'){
+            div_lanches.innerHTML = `<p style='color: red'>Preencha todos os campos corretamente</p>`;
+        }else{
+            var adicionais = 0;
+            if(queijo == 'Mussarela'){
+                adicionais+=2;
+            }else if(queijo == 'Prato'){
+                adicionais+=2.50;
+            }else if(queijo == 'Cheddar'){
+                adicionais+=3;
+            }
+            if(cebola == 'Sim'){
+                adicionais+=1.50;
+            }
+            if(alface == 'Sim'){
+                adicionais+=1.75;
+            }
+            if(tomate == 'Sim'){
+                adicionais+=2;
+            }
+
+            div_lanches.innerHTML = `Tipo Hamburguer: ${tipo}  (${lista_burgerspeso[lista_burgersnome.indexOf(tipo)]}g / 
+            R$${lista_burgerspreco[lista_burgersnome.indexOf(tipo)]})<br>
+            Quantidade de Hamburgueres: ${quantidade}x<br>
+            Queijo: ${queijo}<br>
+            Cebola: ${cebola}<br>
+            Alface: ${alface}<br>
+            Tomate: ${tomate}<br>
+            Preço Final do Lanche: R$${lista_burgerspreco[lista_burgersnome.indexOf(tipo)] * quantidade + adicionais}`;
+        }
+    }
+</script>

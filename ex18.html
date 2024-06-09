@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 18</title>
+</head>
+<body>
+    Cadastre as músicas que você gosta: <input type="text" id="input_musicas"><br><button onclick="cadastrar()">Cadastrar</button><br><br>
+    <button onclick="exibir()">Exibir</button><br>
+    <div id="div_msg"></div><br>
+    De: <input type="text" id="input_de"> Até: <input type="text" id="input_ate"><br><br>
+    <button onclick="filtrar()">Filtrar</button><br><br>
+    <div id="div_filtro"></div>
+</body>
+</html>
+<script>
+    var lista_musicas = [];
+
+    function cadastrar(){
+        var musica = input_musicas.value;
+
+        if(musica == ''){
+            alert('Cadastre um nome válido para a música');
+        }else{
+            lista_musicas.push(musica);
+            input_musicas.value = '';
+            div_msg.innerHTML = '';
+        }
+    }
+
+    function exibir(){
+        if(lista_musicas.length < 1){
+            alert('Nenhuma música foi adicionada ainda')
+        }else{
+            div_msg.innerHTML = '';
+            for(var index = 0; index < lista_musicas.length; index++){
+                div_msg.innerHTML += `<br>${index + 1}º música: ${lista_musicas[index]}`;
+            }
+        }
+    }
+
+    function filtrar(){
+        var de = Number(input_de.value);
+        var ate = Number(input_ate.value);
+
+        if(lista_musicas.length < 1){
+            alert('Nenhuma música foi adicionada ainda');
+        }else if(de == '' || de <= 0 || ate == '' || ate <= 0){
+            alert('Preencha o intervalo com números válidos');
+        }else{
+            div_filtro.innerHTML = '';
+            input_de.value = '';
+            input_ate.value = '';
+            for(var intervalo = de - 1; intervalo <= (ate - 1); intervalo++){
+                if(lista_musicas[intervalo] == undefined){
+                    div_filtro.innerHTML += `Música ${intervalo + 1}: não tem música nessa posição<br>`;
+                }else{
+                    div_filtro.innerHTML += `Música ${intervalo + 1}: ${lista_musicas[intervalo]}<br>`;
+                }
+            }
+        }
+    }
+</script>
