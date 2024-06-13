@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 2</title>
+</head>
+<body>
+    Nome Time 1: <input type="text" id="input_time1"><br><br>
+    Quantidade de vitórias do time 1: <input type="number" id="input_vitorias1"><br><br>
+    Quantidade de empates do time 1: <input type="number" id="input_empates1"><br><br>
+    Quantidade de derrotas do time 1: <input type="number" id="input_derrotas1"><br><br>
+    Nome Time 2: <input type="text" id="input_time2"><br><br>
+    Quantidade de vitórias do time 2: <input type="number" id="input_vitorias2"><br><br>
+    Quantidade de empates do time 2: <input type="number" id="input_empates2"><br><br>
+    Quantidade de derrotas do time 2: <input type="number" id="input_derrotas2"><br><br>
+    <button onclick="comparar()">Comparar campanhas</button><br><br>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    function comparar(){
+        var time1 = {
+            nome: input_time1.value,
+            vitoria: Number(input_vitorias1.value) * 3,
+            empate: Number(input_empates1.value),
+            derrota: Number(input_derrotas1.value)
+        }
+        var time2 = {
+            nome: input_time2.value,
+            vitoria: Number(input_vitorias2.value) * 3,
+            empate: Number(input_empates2.value),
+            derrota: Number(input_derrotas2.value)
+        }
+
+        div_msg.innerHTML = `O time ${time1.nome} terminou o campeonato com ${time1.vitoria + time1.empate} pontos<br>
+        O time ${time2.nome}  terminou o campeonato com ${time2.vitoria + time2.empate} pontos`;
+    }
+</script>

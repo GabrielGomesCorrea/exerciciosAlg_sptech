@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 3</title>
+</head>
+<body>
+    <div id="div_msg">
+        Saldo: R$ 0,00 <br>
+        Depositos: 0 <br>
+        Saques: 0
+    </div><br>
+    <button onclick="operacao('depositar')">Depositar 100</button>
+    <button onclick="operacao('sacar')">Sacar 20</button>
+</body>
+</html>
+<script>
+    var saldo = {
+            saldo: 0,
+            depositos: 0,
+            saques: 0
+        }
+    function operacao(resposta){
+
+        if(resposta == 'depositar'){
+            saldo.saldo += 100;
+            saldo.depositos += 1;
+        }else{
+            saldo.saldo -= 20;
+            saldo.saques += 1;
+        }
+
+        div_msg.innerHTML = `Saldo: R$ ${saldo.saldo} <br>
+        Depositos: ${saldo.depositos} <br>
+        Saques: ${saldo.saques}`;
+    }
+</script>

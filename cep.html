@@ -1,0 +1,62 @@
+<!--https://viacep.com.br/ws/08295130/json/-->
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>Cadastro de Endereço</h1>
+        <label for="input_cep">CEP: </label>
+        <input type="text" id="input_cep" maxlength="8" oninput="buscar()"><br><br>
+
+        <label for="input_logradouro">Logradouro: </label>
+        <input type="text" id="input_logradouro"><br><br>
+
+        <label for="input_complemento">Complemento: </label>
+        <input type="text" id="input_complemento"><br><br>
+
+        <label for="input_bairro">Bairro: </label>
+        <input type="text" id="input_bairro"><br><br>
+
+        <label for="input_localidade">Localidade: </label>
+        <input type="text" id="input_localidade"><br><br>
+
+        <label for="input_uf">UF: </label>
+        <input type="text" id="input_uf">
+    </div><br>
+    <!--button onclick="buscar()">Buscar CEP</button><br-->
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    function buscar() {
+        var cep = input_cep.value;
+
+        if(cep.length == 8 && !isNaN(Number(cep))){
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(function (resposta){
+                console.log(resposta);
+
+                resposta.json()
+                .then(function (resposta){
+                    console.log(resposta);
+
+                    input_logradouro.value = resposta.logradouro
+                    input_complemento.value = resposta.complemento
+                    input_bairro.value = resposta.bairro
+                    input_localidade.value = resposta.localidade
+                    input_uf.value = resposta.uf
+                })
+            }).cath(function (error){
+                console.log('Houve um erro ao fazer a requisição');
+                console.log(error);
+            })
+            console.log('TESTE');
+        }else{
+            console.log('CEP inválido');
+        }
+    }
+</script>
